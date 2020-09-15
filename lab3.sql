@@ -10,7 +10,7 @@
 -- Lab #3: Getting Started with SQL Queries
 ------------------------------------------------------------------------------------------------------
 
--- Question 1: List	the	order number and total dollars of all orders. --
+-- Question 1: List the order number and total dollars of all orders. --
 select orderNum, totalUsd
 from Orders;
 
