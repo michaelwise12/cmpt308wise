@@ -43,5 +43,19 @@ where (city != 'Dallas'
 	  )
 	and priceUSD >= 3.00;
 
+-- Question 7: List all fields for orders in March. --
+select *
+from Orders
+where dateOrdered >= '2020-03-01'
+  and dateOrdered <  '2020-04-01';
+
+-- Question 8: List all fields for orders in February of $20,000 or more. --
+select *
+from Orders
+where (dateOrdered >= '2020-02-01'
+   and dateOrdered <  '2020-03-01'
+	  )
+	and totalUSD >= 20000.00;
+
 
 
