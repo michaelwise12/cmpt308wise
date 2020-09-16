@@ -30,4 +30,18 @@ from People
 where DOB >= '1950-01-01'
   and DOB <  '1960-01-01';
 
+-- Question 5: List the prefix and last name of people who are not "Mr.". --
+select prefix, lastName
+from People
+where prefix != 'Mr.';
+
+-- Question 6: List all fields for products in neither Dallas nor Duluth that cost $3 or more. --
+select *
+from Products
+where (city != 'Dallas'
+   and city != 'Duluth'
+	  )
+	and priceUSD >= 3.00;
+
+
 
