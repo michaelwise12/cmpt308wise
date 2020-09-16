@@ -38,9 +38,7 @@ where prefix != 'Mr.';
 -- Question 6: List all fields for products in neither Dallas nor Duluth that cost $3 or more. --
 select *
 from Products
-where (city != 'Dallas'
-   and city != 'Duluth'
-	  )
+where city not in ('Dallas', 'Duluth')
 	and priceUSD >= 3.00;
 
 -- Question 7: List all fields for orders in March. --
@@ -57,5 +55,12 @@ where (dateOrdered >= '2020-02-01'
 	  )
 	and totalUSD >= 20000.00;
 
+-- Question 9: List all orders from the customer whose id is 007. --
+select *
+from Orders
+where custId = 7;
 
-
+-- Question 10: List all orders from the customer whose id is 005. --
+select *
+from Orders
+where custId = 5;
