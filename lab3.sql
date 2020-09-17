@@ -49,7 +49,7 @@ where extract(month from dateOrdered) = 3;
 -- Question 8: List all fields for orders in February of $20,000 or more. --
 select *
 from Orders
-where (extract(month from dateOrdered) = 3)
+where (extract(month from dateOrdered) = 2)
 	and totalUSD >= 20000.00;
 
 -- Question 9: List all orders from the customer whose id is 007. --
