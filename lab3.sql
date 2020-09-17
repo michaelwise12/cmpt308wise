@@ -44,23 +44,20 @@ where city not in ('Dallas', 'Duluth')
 -- Question 7: List all fields for orders in March. --
 select *
 from Orders
-where dateOrdered >= '2020-03-01'
-  and dateOrdered <  '2020-04-01';
+where extract(month from dateOrdered) = 3;
 
 -- Question 8: List all fields for orders in February of $20,000 or more. --
 select *
 from Orders
-where (dateOrdered >= '2020-02-01'
-   and dateOrdered <  '2020-03-01'
-	  )
+where (extract(month from dateOrdered) = 3)
 	and totalUSD >= 20000.00;
 
 -- Question 9: List all orders from the customer whose id is 007. --
 select *
 from Orders
-where custId = 7;
+where custId = 007;
 
 -- Question 10: List all orders from the customer whose id is 005. --
 select *
 from Orders
-where custId = 5;
+where custId = 005;
