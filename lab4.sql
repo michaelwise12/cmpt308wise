@@ -33,5 +33,17 @@ where pid in (select pid
 						   from Agents)
 			 );
 			 
+-- Question #4: Get all of People data who are neither customers nor agents. --
+select *
+from People
+where pid not in (select pid
+				  from Customers
+				 )
+	and pid not in (select pid 
+					from Agents
+				   );
+
+
+			 
 
 
