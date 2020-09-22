@@ -24,4 +24,14 @@ where pid in (select pid
 			  from Agents
 			 );
 
+-- Question #3: Get all of People data for people who are both customers and agents. --
+select *
+from People
+where pid in (select pid
+			 from Customers
+			 where pid in (select pid
+						   from Agents)
+			 );
+			 
+
 
