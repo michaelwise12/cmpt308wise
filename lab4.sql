@@ -59,5 +59,29 @@ where prodId = 'p01'
 				  )
 order by custId ASC;
 			 
+-- Question #7: Get the first and last names of agents who sold products 'p05' or 'p07'
+-- in order by last name from Z to A. --
+select firstName, lastName
+from People
+where pid in (select pid
+			  from Agents
+			  where pid in (select distinct agentId
+						    from Orders
+						    where prodId in ('p05', 'p07')
+						   )
+			 )
+order by lastName DESC;
 
+-- Question #8: Get the home city and birthday of agents booking an order for the customer
+-- whose pid is 001, sorted by home city from A to Z. --
+select homeCity, DOB
+from People
+where pid in (select pid
+			  from Agents
+			  where pid in (select distinct agentId
+							from Orders
+						    where custId = 001
+						   )
+			 )
+order by homeCity ASC;
 
