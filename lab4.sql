@@ -43,7 +43,21 @@ where pid not in (select pid
 					from Agents
 				   );
 
-
+-- Question #5: Get the ID of customers who ordered either product 'p01' or 'p07' (or both). --
+select distinct custId
+from Orders
+where prodId in ('p01', 'p07');
+			 
+-- Question #6: Get the ID of customers who ordered both products 'p01' and 'p07'. List 
+-- the IDs in order from lowest to highest. Include each ID only once. --
+select distinct custId
+from Orders
+where prodId = 'p01'
+	and custId in (select custId
+				   from Orders
+				   where prodId = 'p07'
+				  )
+order by custId ASC;
 			 
 
 
