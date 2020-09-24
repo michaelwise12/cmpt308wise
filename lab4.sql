@@ -30,7 +30,8 @@ from People
 where pid in (select pid
               from Customers
               where pid in (select pid
-                            from Agents)
+                            from Agents
+                           )
              );
 			 
 -- Question #4: Get all of People data who are neither customers nor agents. --
@@ -90,11 +91,15 @@ order by homeCity ASC;
 -- as asking for ids of products ordered by customers in Toronto.) --
 select distinct prodId
 from Orders
-where agentId in (select distinct agentId -- in this snapshot, the applicable agents have ids 2 & 3
+where agentId in (select agentId -- in this snapshot, the applicable agents have ids 2 & 3
                   from Orders
-                  where custId in (select pid
-                                   from People
-                                   where homeCity = 'Toronto')
+                  where custId in (select pid   -------------- Not sure if this subquery is needed, as we can go straight
+                                   from Customers           -- from custId to pid in People and it will still work, but
+                                   where pid in (select pid -- doesn't maintain hierarchy/ref. integrity
+                                                 from People
+                                                 where homeCity = 'Toronto'
+                                                )
+                                  )
                  )
 order by prodId DESC;
 
@@ -102,10 +107,13 @@ order by prodId DESC;
 -- through agents in Teaneck or Santa Monica. --
 select lastName, homeCity
 from People
-where pid in (select distinct custId -- in this snapshot, customers 4 & 8 place orders through 5
+where pid in (select distinct custId -- in this snapshot, customers 4 & 8 place orders through agent 5
               from Orders
               where agentId in (select pid
-                                from People
-                                where homeCity in ('Teaneck', 'Santa Monica')
+                                from Agents
+                                where pid in (select pid
+                                              from People
+                                               where homeCity in ('Teaneck', 'Santa Monica')
+                                             )
                                )
              );
