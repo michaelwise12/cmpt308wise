@@ -21,3 +21,20 @@ where p.pid = c.pid;
 select p.*
 from People p, Agents a
 where p.pid = a.pid;
+
+-- Question #3: Show all People and Agent data for people who are both customers and agents.
+-- Use joins this time; no subqueries. --
+select p.*, a.*
+from People p, Customers c, Agents a
+where p.pid = c.pid
+  and c.pid = a.pid;
+
+-- Question #4: Show the first name of customers who have never placed an order. Use subqueries. --
+select firstName
+from People
+where pid in (select pid
+              from Customers
+              where pid not in (select custId
+                                from Orders
+                               )
+             );
