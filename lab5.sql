@@ -13,21 +13,18 @@
 -- Question #1: Show all the People data (and only people data) for people who are customers.
 -- Use joins this time; no subqueries. --
 select p.*
-from People p, Customers c
-where p.pid = c.pid;
+from People p inner join Customers c on p.pid = c.pid;
 
 -- Question #2: Show all the People data (and only people data) for people who are agents.
 -- Use joins this time; no subqueries. --
 select p.*
-from People p, Agents a
-where p.pid = a.pid;
+from People p inner join Agents a on p.pid = a.pid;
 
 -- Question #3: Show all People and Agent data for people who are both customers and agents.
 -- Use joins this time; no subqueries. --
 select p.*, a.*
-from People p, Customers c, Agents a
-where p.pid = c.pid
-  and c.pid = a.pid;
+from People p inner join Customers c on p.pid = c.pid
+              inner join Agents a    on c.pid = a.pid;
 
 -- Question #4: Show the first name of customers who have never placed an order. Use subqueries. --
 select firstName
@@ -95,7 +92,6 @@ order by name ASC;
 -- Question #10: Show the first name and last name of customers and agents living in the same
 -- city, along with the name of their shared city. (Living in a city with yourself does not
 -- count, so exclude those from your results.) --
-
 select firstName, lastName, homeCity
 from People
 where homeCity in (select homeCity
