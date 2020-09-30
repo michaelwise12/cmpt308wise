@@ -52,3 +52,33 @@ select distinct pid, commissionPct
 from Agents a inner join Orders o on a.pid = o.agentId
 where custId = 008
 order by commissionPct ASC;
+
+-- Question #7: Show the last name, city, and commission percent of Agents who booked an order for
+-- the customer whose id is 001, sorted by commission percent from high to low. Use joins. --
+select distinct p.lastName, p.homeCity, a.commissionPct
+from People p inner join Agents a on p.pid = a.pid
+              inner join Orders o on a.pid = o.agentId
+where custId = 001
+order by commissionPct DESC;
+
+-- Question #8: Show the last name and home city of customers who live in the city that makes the
+-- fewest different kinds of products. (Hint: use count and group by on the Products table. You
+-- may need limit as well.) --
+select p.lastName, p.homeCity
+from People p inner join Customers c on p.pid = c.pid
+where p.homeCity in (select city
+                     from Products
+                     group by city
+                     order by count(*) -- list cities in order from fewest to most amount of products
+                     limit 1 -- limits search to first row, just made to be city with fewest products
+                    );
+					
+INSERT INTO People (pid, prefix, firstName, lastName, suffix, homeCity, DOB)
+VALUES
+ (010, 'Mr.', 'Alan',       'Labouseur',     'Ph.D.', 'Duluth',      '1968-10-12');
+ 
+INSERT INTO Customers (pid, paymentTerms, discountPct)
+VALUES
+ (010, 'Net 30'    , 25.00);
+select * from People
+select * from Customers
