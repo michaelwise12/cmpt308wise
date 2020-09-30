@@ -72,7 +72,34 @@ where p.homeCity in (select city
                      order by count(*) -- list cities in order from fewest to most amount of products
                      limit 1 -- limits search to first row, just made to be city with fewest products
                     );
-					
+
+-- Question #9: Show the name and id of all Products ordered through any Agent who booked at least
+-- one order for a Customer in Chicago, sorted by product name from A to Z. You can use joins or subqueries. --
+select name, prodId
+from Products
+where prodId in (select prodId
+                 from Orders
+                 where agentId in (select agentId
+                                   from Orders 
+                                   where custId in (select pid
+                                                    from Customers
+                                                    where pid in (select pid
+                                                                  from People
+                                                                  where homeCity = 'Chicago'
+                                                                 )
+                                                   )
+                                  )
+                )
+order by name ASC;
+
+select *
+from Products pr inner join Orders o on pr.prodId = o.prodId
+                 inner join Agents a on o.agentId = a.pid
+where a.pid in (select pid
+			    from)
+
+
+
 INSERT INTO People (pid, prefix, firstName, lastName, suffix, homeCity, DOB)
 VALUES
  (010, 'Mr.', 'Alan',       'Labouseur',     'Ph.D.', 'Duluth',      '1968-10-12');
