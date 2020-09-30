@@ -92,20 +92,15 @@ where prodId in (select prodId
                 )
 order by name ASC;
 
-select *
-from Products pr inner join Orders o on pr.prodId = o.prodId
-                 inner join Agents a on o.agentId = a.pid
-where a.pid in (select pid
-			    from)
+-- Question #10: Show the first name and last name of customers and agents living in the same
+-- city, along with the name of their shared city. (Living in a city with yourself does not
+-- count, so exclude those from your results.) --
 
-
-
-INSERT INTO People (pid, prefix, firstName, lastName, suffix, homeCity, DOB)
-VALUES
- (010, 'Mr.', 'Alan',       'Labouseur',     'Ph.D.', 'Duluth',      '1968-10-12');
- 
-INSERT INTO Customers (pid, paymentTerms, discountPct)
-VALUES
- (010, 'Net 30'    , 25.00);
-select * from People
-select * from Customers
+select firstName, lastName, homeCity
+from People
+where homeCity in (select homeCity
+                   from People p inner join Customers c on p.pid = c.pid)
+  and homeCity in (select homeCity
+                   from People p inner join Agents a on p.pid = a.pid)
+  and pid not in (select a.pid -- this query removes people who are both customers and agents
+                  from Agents a inner join Customers c on a.pid = c.pid);
