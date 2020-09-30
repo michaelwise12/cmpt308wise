@@ -38,3 +38,17 @@ where pid in (select pid
                                 from Orders
                                )
              );
+
+-- Question #5: Show the first name of customers who have never placed an order. Use one inner and
+-- one outer join. --
+select firstName
+from People p inner join Customers c   on p.pid = c.pid
+              left outer join Orders o on c.pid = o.custId
+where o.custId is null;
+
+-- Question #6: Show the id and commission percent of Agents who booked an order for the customer
+-- whose id is 008, sorted by commission percent from low to high. Use joins; no subqueries. --
+select distinct pid, commissionPct
+from Agents a inner join Orders o on a.pid = o.agentId
+where custId = 008
+order by commissionPct ASC;
