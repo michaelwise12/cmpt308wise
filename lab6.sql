@@ -11,11 +11,11 @@
 ------------------------------------------------------------------------------------------------------
 
 -- Question #1: Display the cities that make the most different kinds of products. --
-select city
+select city, count(*)
 from Products
 group by city
-order by count(*) DESC
-limit 2;
+having count(city) > 2;
+
 
 -- Question #2: Display the names of products whose priceUSD is at or above the average
 -- priceUSD, in reverse-alphabetical order. --
@@ -49,5 +49,5 @@ from People p inner join Customers c on p.pid = c.pid
               inner join Orders o    on c.pid = o.custId
               inner join Agents a    on o.agentId = a.pid
               inner join Products pr on o.prodId = pr.prodId
-			  inner join People p2   on a.pid = p2.pid -- inner join another People table to get agent data
-where p2.homeCity = 'Teaneck'
+              inner join People p2   on a.pid = p2.pid -- inner join another People table to get agent data
+where p2.homeCity = 'Teaneck';
