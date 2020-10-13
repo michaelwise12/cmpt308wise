@@ -11,11 +11,11 @@
 ------------------------------------------------------------------------------------------------------
 
 -- Question #1: Display the cities that make the most different kinds of products. --
-select city, count(*)
+select city
 from Products
 group by city
-having count(city) > 2;
-
+order by count(*) DESC
+limit 2;
 
 -- Question #2: Display the names of products whose priceUSD is at or above the average
 -- priceUSD, in reverse-alphabetical order. --
