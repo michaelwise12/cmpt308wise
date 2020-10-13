@@ -41,3 +41,13 @@ from People p inner join      Customers c on p.pid = c.pid
               left outer join Orders o    on c.pid = o.custId
 group by p.lastName
 order by p.lastName DESC;
+
+-- Question #5: Display the names of all customers who bought products from agents based in Teaneck
+-- along with the names of the products they ordered, and the names of the agents who sold it to them. --
+select p.firstName, p.lastName, pr.name as "productName", p2.firstName, p2.lastName
+from People p inner join Customers c on p.pid = c.pid
+              inner join Orders o    on c.pid = o.custId
+              inner join Agents a    on o.agentId = a.pid
+              inner join Products pr on o.prodId = pr.prodId
+			  inner join People p2   on a.pid = p2.pid -- inner join another People table to get agent data
+where p2.homeCity = 'Teaneck'
