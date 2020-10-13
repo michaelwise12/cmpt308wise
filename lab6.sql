@@ -59,7 +59,7 @@ where p2.homeCity = 'Teaneck';
 select o.*, round((o.quantityOrdered * pr.priceUSD) * (1 - (c.discountPct/100)), 4) as "Actual totalUSD"
 from Orders o inner join Products pr on o.prodId = pr.prodId
               inner join Customers c on o.custId = c.pid -- we need the customers table to get discount percent
-where o.totalUSD != (o.quantityOrdered * pr.priceUSD) * (1 - (c.discountPct/100)) -- total = quantity * price * (1 - discount %)
+where o.totalUSD != (o.quantityOrdered * pr.priceUSD) * (1 - (c.discountPct/100)); -- total = quantity * price * (1 - discount %)
 
 /* These values appear as "incorrect" because of how SQL calculates decimals. In the Orders table,
  * the totalUSD is a numeric rounded to 2 decimal places to account for the fact that US currency
@@ -70,4 +70,30 @@ where o.totalUSD != (o.quantityOrdered * pr.priceUSD) * (1 - (c.discountPct/100)
  * should have been rounded up to $25643.89 instead of $25643.88. I appended an "actual totalUSD" column
  * to show the correct, unrounded calculation.
  */
-													 
+
+-- Question #7: Display the first and last name of customers who are also agents. --
+select p.firstName, p.lastName
+from People p inner join Customers c on p.pid = c.pid
+              inner join Agents a    on c.pid = a.pid; -- finds people who are both customers and agents
+
+-- Question #8: Create a VIEW of all Customer and People data called PeopleCustomers. Then another VIEW
+-- of all Agent and People data called PeopleAgents. Then "select *" from each of them in turn to test. --
+create view PeopleCustomers
+as
+select *
+from People
+where pid in (select pid
+              from Customers);
+
+create view PeopleAgents
+as
+select *
+from People
+where pid in (select pid
+              from Agents);
+-- Select statements:
+select *
+from PeopleCustomers;
+
+select *
+from PeopleAgents;
