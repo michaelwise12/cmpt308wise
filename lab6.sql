@@ -111,7 +111,29 @@ from PeopleAgents;
 
 /* In a situation where the query is selecting from a view (like #9), it first looks to the associated
  * base tables, which are Peoples, Customers, and Agents, in this case. Then, it looks for the definitions
- * of the views PeopleCustomers and PeopleAgents, located in the system dialog, which are just queries
+ * of the views PeopleCustomers and PeopleAgents, located in the system catalog, which are just queries
  * themselves that interact with the base tables. Views are helpful because they prevent repetitive SQL
  * statements from being used.
  */
+ 
+-- Question #11 [BONUS]: What's the difference between a LEFT OUTER JOIN and a RIGHT OUTER JOIN? Give
+-- example queries in SQL to demonstrate. (Feel free to use the CAP database to make your points here.) --
+ 
+/* We know that inner joins only include matching rows where a given predicate is fulfilled. Outer joins
+ * retain rows even if there was no matching row fulfilling the condition, introducing null values in
+ * those spots. Left outer join takes the data from the table listed on the left side of the statement,
+ * matches ot with the right table where the condition is true, and where it doesn't match on the
+ * right, it gives null values. The same logic applies to right outer join: take data from the right table,
+ * match it with the left table where the condition is true, and where it doesn't match on the left,
+ * it gives null values. Below are some examples in SQL using the sensational CAP database.
+ */
+  
+-- LEFT OUTER JOIN Example:
+select *
+from People p left outer join Customers c on p.pid = c.pid;
+-- All people who aren't customers have null values on the right side containing customer information. --
+
+-- RIGHT OUTER JOIN Example:
+select *
+from Orders o right outer join Customers c on o.custId = c.pid;
+-- Any customer who has never ordered something will have null values on the left side containing order info. --
