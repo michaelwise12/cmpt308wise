@@ -97,3 +97,21 @@ from PeopleCustomers;
 
 select *
 from PeopleAgents;
+
+-- Question #9: Display the first and last name of all customers who are also agents, this time
+-- using the views you created. --
+select firstName, lastName
+from PeopleCustomers
+INTERSECT -- intersect finds elements that appear in both rows (thus people who are both customers and agents)
+select firstName, lastName
+from PeopleAgents;
+
+-- Question #10: Compare your SQL in #7 (no views) and #9 (using views). The output is the same. How does
+-- that work? What is the database server doing internally when it processes the #9 query? --
+
+/* In a situation where the query is selecting from a view (like #9), it first looks to the associated
+ * base tables, which are Peoples, Customers, and Agents, in this case. Then, it looks for the definitions
+ * of the views PeopleCustomers and PeopleAgents, located in the system dialog, which are just queries
+ * themselves that interact with the base tables. Views are helpful because they prevent repetitive SQL
+ * statements from being used.
+ */
