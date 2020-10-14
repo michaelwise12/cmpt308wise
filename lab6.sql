@@ -14,8 +14,12 @@
 select city
 from Products
 group by city
-order by count(*) DESC
-limit 2;
+having count(*) in (select max(CityGroup.countnum)      -- We need to aliases otherwise PostGres gives an error.
+                    from (select count(*) as countnum   -- We create an alias table "CityGroup", with just one column
+                          from Products                 -- alias called "countnum" containing the count(*) of city
+                          group by city) as CityGroup); -- products. We then have the max value of that column
+						                                -- and can use a group by/having to check which cites have that
+                                                        -- max number of products.
 
 -- Question #2: Display the names of products whose priceUSD is at or above the average
 -- priceUSD, in reverse-alphabetical order. --
