@@ -18,7 +18,7 @@ having count(*) in (select max(CityGroup.countnum)      -- We need to aliases ot
                     from (select count(*) as countnum   -- We create an alias table "CityGroup", with just one column
                           from Products                 -- alias called "countnum" containing the count(*) of city
                           group by city) as CityGroup); -- products. We then have the max value of that column
-						                                -- and can use a group by/having to check which cites have that
+                                                        -- and can use a group by/having to check which cites have that
                                                         -- max number of products.
 
 -- Question #2: Display the names of products whose priceUSD is at or above the average
@@ -35,12 +35,12 @@ order by name DESC; -- In this snapshot, a brilliant Red Barchetta significantly
 select p.lastName, o.prodId, o.totalUSD
 from People p inner join Customers c on p.pid = c.pid
               inner join Orders o    on c.pid = o.custId
-where extract(month from o.dateOrdered) = 3
+where extract(month from o.dateOrdered) = 3 -- extracts month portion from dates (3 = "March")
 order by totalUSD DESC;
 
 -- Question #4: Display the last name of all customers (in reverse alphabetical order) and their
 -- total ordered, and nothing more. (Hint: use coalesce to avoid showing NULLs.) --
-select p.lastName, coalesce(sum(o.totalUSD), 0)
+select p.lastName, coalesce(sum(o.totalUSD), 0) -- replaces any NULLs with 0
 from People p inner join      Customers c on p.pid = c.pid
               left outer join Orders o    on c.pid = o.custId
 group by p.lastName
@@ -76,20 +76,20 @@ where o.totalUSD != (o.quantityOrdered * pr.priceUSD) * (1 - (c.discountPct/100)
  */
 
 -- Question #7: Display the first and last name of customers who are also agents. --
-select p.firstName, p.lastName
+select p.firstName, p.lastName  -- I could of used subqueries as well but joins are just easier in this case
 from People p inner join Customers c on p.pid = c.pid
               inner join Agents a    on c.pid = a.pid; -- finds people who are both customers and agents
 
 -- Question #8: Create a VIEW of all Customer and People data called PeopleCustomers. Then another VIEW
 -- of all Agent and People data called PeopleAgents. Then "select *" from each of them in turn to test. --
-create view PeopleCustomers
+create view PeopleCustomers -- People who are Customers
 as
 select *
 from People
 where pid in (select pid
               from Customers);
 
-create view PeopleAgents
+create view PeopleAgents -- People who are Agents
 as
 select *
 from People
@@ -139,5 +139,5 @@ from People p left outer join Customers c on p.pid = c.pid;
 
 -- RIGHT OUTER JOIN Example:
 select *
-from Orders o right outer join Customers c on o.custId = c.pid;
--- Any customer who has never ordered something will have null values on the left side containing order info. --
+from Orders o right outer join Products pr on o.prodId = pr.prodId;
+-- Any product that has never been ordered will have null values on the left side containing order info. --
