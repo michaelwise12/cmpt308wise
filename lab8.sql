@@ -12,6 +12,14 @@
 
 -- #2: SQL create statements for each table of our movie database. --
 
+-- ZIPAddress --
+CREATE TABLE ZIPAddress (
+   zip     text not null,
+   city    text,
+   state   text,
+ primary key(zip)
+);
+
 -- People --
 CREATE TABLE People (
    pid              int not null,
@@ -24,13 +32,6 @@ CREATE TABLE People (
  primary key(pid)
 );
 
--- ZIPAddress --
-CREATE TABLE ZIPAddress (
-   zip     text not null,
-   city    text,
-   state   text,
- primary key(zip)
-);
 
 -- Actors --
 CREATE TABLE Actors (
