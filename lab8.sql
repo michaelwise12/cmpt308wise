@@ -71,3 +71,23 @@ CREATE TABLE MovieDirectors (
   pid   int not null references Directors(pid),
  primary key(mid, pid)
 );
+
+-- #4: Write a query to show all directors with whom "Roger Moore" has worked. --
+select firstName, lastName
+from People
+where pid in (select pid
+              from MovieDirectors
+              where mid in (select mid -- this line finds actors and directors that were in the same movie
+                            from MovieActors
+                            where pid in (select pid -- find actors named Roger Moore
+                                          from Actors
+                                          where pid in (select pid
+                                                        from People
+                                                        where firstName = 'Roger'
+                                                          and lastName  = 'Moore')
+                                         )
+                           )
+             );
+
+-- A more fitting query would be for directors Sean Connery has worked with. --
+-- R.I.P. Aug. 25 1930 - Oct. 31 2020 --
