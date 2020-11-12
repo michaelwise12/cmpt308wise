@@ -18,9 +18,18 @@ CREATE TABLE People (
    firstName        text,
    lastName         text,
    address          text,
+   zip              text not null references ZIPAddress(zip),
    spouseFirstName  text,
    spouseLastName   text,
  primary key(pid)
+);
+
+-- ZIPAddress --
+CREATE TABLE ZIPAddress (
+   zip     text not null,
+   city    text,
+   state   text,
+ primary key(zip)
 );
 
 -- Actors --
