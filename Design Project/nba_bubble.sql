@@ -140,3 +140,40 @@ CREATE TABLE Matchmaking (
    awayTeamID int not null references Teams(teamID),
  primary key(gameID)
 );
+
+-- INSERT STATEMENTS --
+
+-- People --
+INSERT INTO People (pid, firstName, lastName, suffix, dateOfBirth, phoneNumber)
+VALUES
+ (001, 'Lebron',  'James',         NULL,  '1984-12-30', '555-023-0824'),
+ (002, 'Giannis', 'Antetokounmpo', NULL,  '1994-12-06', '555-123-4567'),
+ (003, 'Kawhi',   'Leonard',       NULL,  '1991-06-29', NULL),
+ (004, 'Anthony', 'Davis',         NULL,  '1993-03-11', '800-111-2323'),
+ (005, 'John',    'Smith',         'Sr.', '1964-11-06', '321-100-2020'),
+ (006, 'James',   'Harden',        'Jr.', '1989-08-26', NULL),
+ (007, 'Damian',  'Lillard',       NULL,  '1990-07-15', '123-000-0000'),
+ (008, 'Joel',    'Embiid',        NULL,  '1994-03-16', NULL),
+ (009, 'Kemba',   'Walker',        NULL,  '1990-05-08', '555-150-0815'),
+ (010, 'Frank',   'Vogel',         NULL,  '1973-06-21', '800-987-6543'),
+ (011, 'Jimmy',   'Butler',        'III', '1989-09-14', '555-222-2222'),
+ (012, 'Nick',    'Nurse',         NULL,  '1967-07-24', '123-426-3333'),
+ (013, 'Thomas',  'Thomas',        'IX',  '1958-01-11', '666-666-1337'),
+ (014, 'Alan',    'Labouseur',     NULL,  '1970-01-01', '845-440-1102')
+;
+
+-- Players --
+INSERT INTO Players (pid, primaryPosition, secondaryPosition, heightInches, weightPounds, shootingHand)
+VALUES
+ (001, 'SF', 'PG', 81, 250, 'both'),
+ (002, 'PF', 'C',  83, 242, 'right'),
+ (003, 'SF', NULL, 79, 225, 'right'),
+ (004, 'C', 'PF',  82, 253, 'right'),
+ (006, 'SG','PG',  77, 220, 'left'),
+ (007, 'PG', NULL, 74, 195, 'right'),
+ (008, 'C',  NULL, 84, 280, 'right'),
+ (009, 'PG', NULL, 72, 184, 'right'),
+ (011, 'SF', 'SG', 79, 230, 'right'),
+ (014, 'SG', 'C',  98, 360, 'both')
+;
+select * from People p inner join Players pl on p.pid=pl.pid
