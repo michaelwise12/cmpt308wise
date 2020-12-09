@@ -107,3 +107,36 @@ CREATE TABLE TeamStaff (
    teamID  int not null references Teams(teamID),
  primary key(pid)
 );
+
+-- Practice -- (dealing with teams' daily practice times)
+CREATE TABLE Practice (
+   teamID            int not null references Teams(teamID),
+   courtNumber       int,
+   dailyPracticeTime time,
+ primary key(teamID)
+);
+
+-- Venues -- (games are played in 3 different venues in ESPN Wide World of Sports Complex)
+CREATE TABLE Venues (
+   venueID       int  not null,
+   name          text,
+   streetAddress text,
+ primary key(venueID)
+);
+
+-- Games --
+CREATE TABLE Games (
+   gameID    int not null,
+   venueID   int not null references Venues(venueID),
+   matchDate date,
+   matchTime time,
+ primary key(gameID)
+);
+
+-- Matchmaking -- (entity that tells what teams are playing what games)
+CREATE TABLE Matchmaking (
+   gameID     int not null references Games(gameID),
+   homeTeamID int not null references Teams(teamID),
+   awayTeamID int not null references Teams(teamID),
+ primary key(gameID)
+);
