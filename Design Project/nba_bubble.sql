@@ -92,3 +92,18 @@ CREATE TABLE PlaysFor (
    contract_end   date,
  primary key(pid, teamID)
 );
+
+-- StaffType -- (i.e. Coaching staff, training staff, etc.)
+CREATE TABLE StaffType (
+   staffID int  not null,
+   name    text not null,
+ primary key (staffID)
+);
+
+-- TeamStaff -- (each staff member is associated with a team, i.e. coaches & trainers)
+CREATE TABLE TeamStaff (
+   pid     int not null references People(pid),
+   staffID int not null references StaffType(staffID),
+   teamID  int not null references Teams(teamID),
+ primary key(pid)
+);
