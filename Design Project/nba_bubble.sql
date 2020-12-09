@@ -57,3 +57,38 @@ CREATE TABLE BubbleEmployees (
    hourlyWage   money,
  primary key(pid)
 );
+
+-- Hotels -- (players & staff stayed in a selection of hotels on the Disney campus)
+CREATE TABLE Hotels (
+   hotelID       int not null,
+   hotelName     text,
+   streetAddress text,
+ primary key(hotelID)
+);
+
+-- Rooms -- (how people are assigned to what hotel and what room number)
+CREATE TABLE Rooms (
+   pid        int not null references People(pid),
+   hotelID    int not null references Hotels(hotelID),
+   roomNumber text,
+ primary key(pid)
+);
+
+-- Teams --
+CREATE TABLE Teams (
+   teamID   int  not null,
+   location text not null,
+   name     text not null,
+   wins     int,
+   losses   int,
+ primary key(teamID)
+);
+
+-- PlaysFor -- (associative entity - many Players play/have played for many Teams)
+CREATE TABLE PlaysFor (
+   pid            int not null references Players(pid),
+   teamID         int not null references Teams(teamID),
+   contract_start date,
+   contract_end   date,
+ primary key(pid, teamID)
+);
