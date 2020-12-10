@@ -266,5 +266,23 @@ VALUES
  (011, 09, '07-06-2019', '07-06-2023'),
  (014, 03, '07-09-2018', '07-09-2112')
 ;
+
+-- StaffType --
+INSERT INTO StaffType (staffID, name)
+VALUES
+ (01, 'Head Coach'),
+ (02, 'Assistant Coach'),
+ (03, 'General Manager'),
+ (04, 'Athletic Trainer')
+;
+
+-- TeamStaff --
+INSERT INTO TeamStaff (pid, staffID, teamID)
+VALUES
+ (010, 01, 01),
+ (012, 01, 03)
+;
+
+
 select * from People
 select * from PlaysFor
