@@ -283,6 +283,47 @@ VALUES
  (012, 01, 03)
 ;
 
+-- Practice --
+INSERT INTO Practice (teamID, courtNumber, dailyPracticeTime)
+VALUES
+ (01, 1, '7:30 AM'),
+ (02, 2, '8:00 AM'),
+ (03, 3, '8:30 AM'),
+ (04, 4, '9:00 AM'),
+ (05, 1, '9:30 AM'),
+ (06, 2, '10:00 AM'),
+ (07, 3, '10:30 AM'),
+ (08, 4, '11:00 AM'),
+ (09, 1, '11:30 AM')
+;
 
-select * from People
-select * from PlaysFor
+-- Venues --
+INSERT INTO Venues (venueID, name, streetAddress)
+VALUES
+ (01, 'HP Field House',       '701 S Victory Way'),
+ (02, 'Visa Athletic Center', '702 S Victory Way'),
+ (03, 'AdventHealth Arena',   '700 S Victory Way')
+;
+-- Games --
+INSERT INTO Games (gameID, venueID, matchDate, matchTime)
+VALUES
+ (001, 03, '08-21-2020', '5:00 PM'),
+ (002, 02, '08-21-2020', '9:00 PM'),
+ (003, 01, '08-23-2020', '1:00 PM'),
+ (004, 01, '08-28-2020', '6:30 PM'),
+ (005, 03, '08-28-2020', '10:30 PM'),
+ (006, 01, '09-06-2020', '3:00 PM'),
+ (007, 02, '09-12-2020', '1:00 PM')  -- I could keep adding more but the point is clear.
+;
+
+-- Matchmaking --
+INSERT INTO Matchmaking (gameID, homeTeamID, awayTeamID)
+VALUES
+ (001, 01, 04),
+ (002, 02, 03),
+ (003, 05, 07),
+ (004, 08, 09),
+ (005, 06, 02),
+ (006, 04, 05),
+ (007, 09, 01)
+;
