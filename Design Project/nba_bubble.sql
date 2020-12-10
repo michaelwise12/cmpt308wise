@@ -38,7 +38,7 @@ CREATE TABLE Players (
 CREATE TABLE COVIDTesting (
    pid            int  not null references People(pid),
    lastResultDate date not null,
-   lastTestResult text not null check (lastTestResult = 'postive' or lastTestResult = 'negative'),
+   lastTestResult text not null check (lastTestResult = 'positive' or lastTestResult = 'negative'),
  primary key(pid, lastResultDate)
 );
 
@@ -176,4 +176,67 @@ VALUES
  (011, 'SF', 'SG', 79, 230, 'right'),
  (014, 'SG', 'C',  98, 360, 'both')
 ;
-select * from People p inner join Players pl on p.pid=pl.pid
+
+-- COVIDTesting --
+INSERT INTO COVIDTesting (pid, lastResultDate, lastTestResult)
+VALUES
+ (001, '2020-10-07', 'negative'),
+ (002, '2020-09-12', 'negative'),
+ (003, '2020-09-17', 'negative'),
+ (004, '2020-10-07', 'negative'),
+ (005, '2020-10-05', 'positive'),
+ (006, '2020-09-25', 'negative'),
+ (007, '2020-09-03', 'negative'),
+ (008, '2020-09-05', 'negative'),
+ (009, '2020-09-28', 'negative'),
+ (010, '2020-10-07', 'negative'),
+ (011, '2020-10-06', 'negative'),
+ (012, '2020-09-15', 'negative'),
+ (013, '2020-10-01', 'positive'),
+ (014, '2020-10-04', 'negative')
+;
+
+-- JobInfo --
+INSERT INTO JobInfo (jobID, name, description)
+VALUES
+ (01, 'Front Desk', 'Serves players and staff at the front desk.'),
+ (02, 'Janitor', 'Cleans the public areas of the resorts.'),
+ (03, 'Hotel Manager', 'The manager of a hotel.'),
+ (04, 'Maid', 'Cleans rooms of players, coaches, and other staff.'),
+ (05, 'Food Service', 'Provides and prepares food for teams.')
+;
+
+-- BubbleEmployees --
+INSERT INTO BubbleEmployees (pid, jobID, hourlyWage)
+VALUES
+ (005, 02, 11.30),
+ (013, 01, 17.50)
+;
+
+-- Hotels --
+INSERT INTO Hotels (hotelID, hotelName, streetAddress)
+VALUES
+ (01, 'Grand Floridian',                        '4401 Floridian Way'),
+ (02, 'Gran Destino Tower at Coronado Springs', '1000 Buena Vista Dr'),
+ (03, 'Disneys Yacht Club Resort',              '1700 Epcot Resorts Blvd')
+;
+
+-- Rooms --
+INSERT INTO Rooms (pid, hotelID, roomNumber)
+VALUES
+ (001, 02, '5004'),
+ (002, 02, '3016'),
+ (003, 02, '4120'),
+ (004, 02, '5012'),
+ (006, 01, '4428'),
+ (007, 03, '1238'),
+ (008, 02, '4014'),
+ (009, 02, '1238'),
+ (010, 02, '5008'),
+ (011, 02, '3042'),
+ (012, 02, '5764'),
+ (014, 01, '1622')
+;
+
+select * from People
+select * from Rooms
