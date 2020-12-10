@@ -342,6 +342,7 @@ from People p inner join Players pl on p.pid = pl.pid
               inner join Teams t    on f.teamID = t.teamID;
 			  
 select * from PlayerInfo;
+
 -- PowerRankings -- Evaluates the win percentage of each team and then ranks them from best record to worst
 create view PowerRankings
 as
@@ -350,3 +351,20 @@ from Teams
 order by winPercentage DESC;
 
 select * from PowerRankings;
+
+
+-- REPORTS --
+-------------
+-- Total number of players that have expiring contracts within the next 2 offseasons (up to summer 2022).
+select count(pid)
+from PlaysFor
+where contract_end < '2022-08-01';
+
+-- Reports the total number of players/staff who have tested positive for COVID-19.
+select count(pid)
+from COVIDTesting
+where lastTestResult = 'positive';
+
+-- STORED PROCEDURES --
+-----------------------
+
