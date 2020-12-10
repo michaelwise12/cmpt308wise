@@ -439,3 +439,29 @@ VALUES
  (005, 'PG', NULL, 59, 65, 'left');
 select * from Players
 
+-- roomFull: Prevents you from adding someone to a room that's already occupied. --
+create or replace function roomFull() returns trigger as
+$$
+begin
+   if (NEW.roomNumber in (select roomNumber from Rooms)) then
+   delete from Rooms where roomNumber = NEW.roomNumber;
+   end if;
+   
+   return new;
+end;
+$$ 
+language plpgsql;
+
+create trigger roomFull
+after insert on Rooms
+for each row
+execute procedure roomFull();
+
+-- Let's try to add Thomas Thomas to Lebron's room. --
+INSERT INTO Rooms (pid, hotelID, roomNumber)
+VALUES
+ (013, 02, 5004);
+select * from Rooms
+select * from People
+
+	   
