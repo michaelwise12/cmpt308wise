@@ -411,3 +411,31 @@ language plpgsql;
 
 select hotelSearch('Grand Floridian', 'results');
 fetch all from results;
+
+
+-- TRIGGERS --
+-- isTooShort: Players that are under 5'3 do not deserve to be in the NBA. They will get deleted from
+-- the database if they are that short. Sorry. You will get destroyed out there. --
+create or replace function isTooShort() returns trigger as
+$$
+begin
+   if (NEW.heightInches < 63) then
+   delete from Players where heightInches = NEW.heightInches;
+   end if;
+   
+   return new;
+end;
+$$ 
+language plpgsql;
+
+create trigger isTooShort
+after insert on Players
+for each row
+execute procedure isTooShort();
+
+-- Let's try to add John Smith (who is 4'11) into the players table.
+INSERT INTO Players (pid, primaryPosition, secondaryPosition, heightInches, weightPounds, shootingHand)
+VALUES
+ (005, 'PG', NULL, 59, 65, 'left');
+select * from Players
+
