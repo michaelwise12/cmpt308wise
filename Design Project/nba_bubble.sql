@@ -238,5 +238,33 @@ VALUES
  (014, 01, '1622')
 ;
 
+-- Teams --
+INSERT INTO Teams (teamID, location, name, wins, losses)
+VALUES
+ (01, 'Los Angeles',  'Lakers',         52, 19),
+ (02, 'Milwaukee',    'Bucks',          56, 17),
+ (03, 'Toronto',      'Raptors',        53, 19),
+ (04, 'Los Angeles',  'Clippers',       49, 23),
+ (05, 'Houston',      'Rockets',        44, 28),
+ (06, 'Philadelphia', '76ers',          43, 30),
+ (07, 'Portland',     'Trail Blazers',  35, 39),
+ (08, 'Boston',       'Celtics',        48, 24),
+ (09, 'Miami',        'Heat',           44, 29)
+;
+
+-- PlaysFor --
+INSERT INTO PlaysFor (pid, teamID, contract_start, contract_end)
+VALUES
+ (001, 01, '07-09-2018', '07-09-2022'),
+ (002, 02, '09-20-2016', '09-20-2021'),
+ (003, 04, '07-09-2018', '07-09-2022'),
+ (004, 01, '07-06-2019', '12-03-2025'),
+ (006, 05, '07-08-2017', '07-08-2023'),
+ (007, 07, '07-06-2019', '07-06-2025'),
+ (008, 06, '10-10-2017', '10-10-2023'),
+ (009, 08, '07-06-2019', '07-06-2023'),
+ (011, 09, '07-06-2019', '07-06-2023'),
+ (014, 03, '07-09-2018', '07-09-2112')
+;
 select * from People
-select * from Rooms
+select * from PlaysFor
