@@ -368,3 +368,46 @@ where lastTestResult = 'positive';
 -- STORED PROCEDURES --
 -----------------------
 
+-- showSchedule --
+-- Function that shows all the upcoming games (with match info) for a specified team. --
+create or replace function showSchedule(text, REFCURSOR) returns refcursor as 
+$$
+declare
+   teamName  text      := $1;
+   resultset REFCURSOR := $2;
+begin
+   open resultset for 
+      select m.gameID, t.name as homeTeam, t2.name as awayTeam, g.matchDate, g.matchTime, v.name as Venue, v.streetAddress
+      from Matchmaking m inner join Games g  on m.gameID   = g.gameID
+	                     inner join Venues v on g.venueID  = v.venueID
+						 inner join Teams t  on t.teamID   = m.homeTeamID
+						 inner join Teams t2 on t2.teamID  = m.awayTeamID
+      where t.name = teamName or t2.name = teamName;
+   return resultset;
+end;
+$$ 
+language plpgsql;
+
+select showSchedule('Clippers', 'results');
+fetch all from results;
+
+-- hotelSearch --
+-- Returns list of all the players staying in a specified hotel, with their room/contact info.
+create or replace function hotelSearch(text, REFCURSOR) returns refcursor as 
+$$
+declare
+   nameOfHotel  text      := $1;
+   resultset    REFCURSOR := $2;
+begin
+   open resultset for 
+      select p.*, r.roomNumber, h.hotelName, h.streetAddress
+      from People p inner join Rooms r on p.pid = r.pid
+	                inner join Hotels h on r.hotelID = h.hotelID
+      where h.hotelName = nameOfHotel;
+   return resultset;
+end;
+$$ 
+language plpgsql;
+
+select hotelSearch('Grand Floridian', 'results');
+fetch all from results;
