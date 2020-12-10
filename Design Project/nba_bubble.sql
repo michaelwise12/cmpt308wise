@@ -11,6 +11,7 @@
 ------------------------------------------------------------------------------------------------------
 
 -- CREATE STATEMENTS --
+-----------------------
 
 -- People --
 CREATE TABLE People (
@@ -142,6 +143,7 @@ CREATE TABLE Matchmaking (
 );
 
 -- INSERT STATEMENTS --
+-----------------------
 
 -- People --
 INSERT INTO People (pid, firstName, lastName, suffix, dateOfBirth, phoneNumber)
@@ -327,3 +329,24 @@ VALUES
  (006, 04, 05),
  (007, 09, 01)
 ;
+
+-- VIEWS --
+-----------
+-- PlayerInfo -- Convinient way to view every stat pertaining to a player (including team & contract data)
+create view PlayerInfo
+as
+select p.*, pl.primaryPosition, pl.secondaryPosition, pl.heightInches, pl.weightPounds, pl.shootingHand,
+            f.contract_start, f.contract_end, t.location as teamCity, t.name as teamName
+from People p inner join Players pl on p.pid = pl.pid
+              inner join PlaysFor f on pl.pid = f.pid
+              inner join Teams t    on f.teamID = t.teamID;
+			  
+select * from PlayerInfo;
+-- PowerRankings -- Evaluates the win percentage of each team and then ranks them from best record to worst
+create view PowerRankings
+as
+select *, cast((wins * 1.0 /(wins+ losses)) as decimal(4,3)) as winPercentage
+from Teams
+order by winPercentage DESC;
+
+select * from PowerRankings;
