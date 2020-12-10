@@ -414,6 +414,8 @@ fetch all from results;
 
 
 -- TRIGGERS --
+--------------
+
 -- isTooShort: Players that are under 5'3 do not deserve to be in the NBA. They will get deleted from
 -- the database if they are that short. Sorry. You will get destroyed out there. --
 create or replace function isTooShort() returns trigger as
@@ -433,7 +435,7 @@ after insert on Players
 for each row
 execute procedure isTooShort();
 
--- Let's try to add John Smith (who is 4'11) into the players table.
+-- Let's try to add John Smith (who is 4'11 = 59 inches) into the players table.
 INSERT INTO Players (pid, primaryPosition, secondaryPosition, heightInches, weightPounds, shootingHand)
 VALUES
  (005, 'PG', NULL, 59, 65, 'left');
@@ -464,4 +466,25 @@ VALUES
 select * from Rooms
 select * from People
 
-	   
+-- SECURITY --
+--------------
+create role admin;  -- Admin: access to everythin in database.
+grant all on
+all tables
+in schema public
+to admin;
+
+create role frontDeskWorker; -- Front Desk: can change/update rooming information.
+grant select, insert, update
+on Rooms, Hotels
+to frontDeskWorker;
+
+create role coach;  -- Coach: can view most staff, player, and game information
+grant select
+on Players, Teams, TeamStaff, StaffType, Practice, Matchmaking, Games, Venues
+to coach;
+
+create role healthDept;  -- Health Worker: can update database with latest COVID info, but nothing else
+grant select, insert, update
+on COVIDTesting
+to healthDept;
