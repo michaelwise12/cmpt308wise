@@ -141,7 +141,7 @@ CREATE TABLE Matchmaking (
    awayTeamID int not null references Teams(teamID),
  primary key(gameID)
 );
-
+select * from matchmaking
 -- INSERT STATEMENTS --
 -----------------------
 
@@ -346,7 +346,7 @@ select * from PlayerInfo;
 -- PowerRankings -- Evaluates the win percentage of each team and then ranks them from best record to worst
 create view PowerRankings
 as
-select *, cast((wins * 1.0 /(wins+ losses)) as decimal(4,3)) as winPercentage
+select *, cast((wins * 1.0 /(wins + losses)) as decimal(4,3)) as winPercentage
 from Teams
 order by winPercentage DESC;
 
@@ -439,7 +439,7 @@ execute procedure isTooShort();
 INSERT INTO Players (pid, primaryPosition, secondaryPosition, heightInches, weightPounds, shootingHand)
 VALUES
  (005, 'PG', NULL, 59, 65, 'left');
-select * from Players
+select * from Players;
 
 -- roomFull: Prevents you from adding someone to a room that's already occupied. --
 create or replace function roomFull() returns trigger as
@@ -468,7 +468,7 @@ select * from People
 
 -- SECURITY --
 --------------
-create role admin;  -- Admin: access to everythin in database.
+create role admin;  -- Admin: access to everything in database.
 grant all on
 all tables
 in schema public
@@ -484,7 +484,10 @@ grant select
 on Players, Teams, TeamStaff, StaffType, Practice, Matchmaking, Games, Venues
 to coach;
 
-create role healthDept;  -- Health Worker: can update database with latest COVID info, but nothing else
+create role healthDept;     -- Health Worker: can update database with latest COVID info, but nothing else
 grant select, insert, update
 on COVIDTesting
 to healthDept;
+
+
+-- Thank you Alan for being such a great professor!!!!! ;) --
